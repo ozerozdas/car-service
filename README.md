@@ -9,6 +9,10 @@ If you want to run project with sample data, you can run with this command
 
     php artisan migrate && php artisan db:seed && php artisan serve
 
+There is a command to import car list. This can be scheduled as a cronjob.
+
+    php artisan import:cars
+
 # Endpoints
 
 ## Authentication

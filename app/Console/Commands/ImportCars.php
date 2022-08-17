@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\Models\Cars;
 
-class ExportCars extends Command
+class ImportCars extends Command
 {
     /**
      * @var string
@@ -18,14 +18,14 @@ class ExportCars extends Command
      *
      * @var string
      */
-    protected $signature = 'export:cars';
+    protected $signature = 'import:cars';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command will export cars into your database';
+    protected $description = 'This command will import cars into your database';
 
     /**
      * Create a new command instance.
@@ -60,7 +60,7 @@ class ExportCars extends Command
             }
 
             DB::commit();
-            $this->info('The export was successful!');
+            $this->info('The import was successful!');
         }
         return 0;
     }
