@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Services;
 use Illuminate\Http\Request;
+use App\Models\Services;
+use App\Http\Resources\ServicesResource;
 
 class ServicesController extends Controller
 {
@@ -14,18 +15,11 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $status = true; $statusCode = 200; $data = [];
-        try {
-            $data = Services::select('id', 'name')->get();
-        } catch (\Exception $e) {
-            $status = false;
-            $statusCode = 500;
-            $data = [ 'errorMessage' => $e->getMessage() ];
-        }
-        return response()->json([
-            'status' => $status,
-            'result' => $data
-        ], $statusCode);
+        return ServicesResource::collection(Services::get())->additional([
+            'meta' => [
+                'userBalance' => $this->getUserBalance(),
+            ]
+        ]);
     }
 
     /**
