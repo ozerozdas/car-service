@@ -47,3 +47,20 @@ If you want to run project with sample data, you can run with this command
     {
         "token": "..."
     }
+
+## Orders
+`GET` /api/v1/orders
+
+    {
+        "token": "...",
+        "service_id": 1, // optional
+        "car_id": 1, // optional
+    }
+
+`POST` /api/v1/orders
+
+    {
+        "token": "...",
+        "service": "Yağ Değişimi",
+        "car_model": "ACURA  RDX 2018 - Present"
+    }

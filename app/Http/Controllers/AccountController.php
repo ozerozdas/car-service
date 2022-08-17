@@ -21,8 +21,9 @@ class AccountController extends Controller
             $account->user_id = auth()->user()->id;
             $account->balance = $request->value;
             $account->save();
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             DB::rollBack();
+            throw new \ErrorException('Error found');
         }
         DB::commit();
 
