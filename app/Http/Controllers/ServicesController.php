@@ -14,9 +14,18 @@ class ServicesController extends Controller
      */
     public function index()
     {
+        $status = true; $statusCode = 200; $data = [];
+        try {
+            $data = Services::select('id', 'name')->get();
+        } catch (\Exception $e) {
+            $status = false;
+            $statusCode = 500;
+            $data = [ 'errorMessage' => $e->getMessage() ];
+        }
         return response()->json([
-            'status' => true
-        ]);
+            'status' => $status,
+            'result' => $data
+        ], $statusCode);
     }
 
     /**
