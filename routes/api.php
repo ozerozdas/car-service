@@ -5,6 +5,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\CarsController;
 
 Route::post('login', [ApiController::class, 'authenticate']);
 Route::post('register', [ApiController::class, 'register']);
@@ -20,4 +21,7 @@ Route::group(['middleware' => ['jwt.verify'], 'prefix' => 'v1'], function() {
     ## Orders
     Route::get('/orders', [OrdersController::class, 'getOrders']);
     Route::post('/orders', [OrdersController::class, 'setOrder']);
+
+    ## Cars
+    Route::get('/cars', [CarsController::class, 'index']);
 });

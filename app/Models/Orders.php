@@ -13,11 +13,11 @@ class Orders extends Model
 
     public function cars()
     {
-        return $this->hasMany(Cars::class, 'id', 'car_id');
+        return $this->hasOne(Cars::class, 'id', 'car_id');
     }
 
     public function services()
     {
-        return $this->hasMany(Services::class, 'id', 'service_id');
+        return $this->hasOne(Services::class, 'id', 'service_id');
     }
 }

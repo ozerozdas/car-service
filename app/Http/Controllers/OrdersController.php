@@ -14,22 +14,27 @@ class OrdersController extends Controller
 {
     public function getOrders(Request $request)
     {
+        $page = !empty($request->page) ? $request->page : 1;
+        $userId = auth()->user()->id;
         $columns = ['service_id', 'car_id'];
-        $filter = ['user_id' => auth()->user()->id];
+        $filter = ['user_id' => $userId];
+        $cacheArray = ['orderList.user', $userId, 'page', $page];
 
         foreach($columns as $column){
             if($request->{$column}){
                 $filter[$column] = $request->{$column};
+                $cacheArray[] = $column;
+                $cacheArray[] = $request->{$column};
             }
         }
-        $data = Orders::with('cars')->with('services:id,name')->where($filter)->get();
-        // $userId = auth()->user()->id;
-        // Cache::forget('orderList.user_' . $userId);
-        // $data = Cache::remember('orderList.user_' . $userId, 60 * 5, function () {
-        //     return Orders::where([
-        //         'user_id' => auth()->user()->id
-        //     ])->get();
-        // });
+        $cacheName = implode('_', $cacheArray);
+        Cache::forget($cacheName);
+        $data = Cache::remember($cacheName, 60 * 5, function () use ($filter) {
+            return Orders::with('cars')
+                ->with('services:id,name')
+                ->where($filter)
+                ->paginate(100);
+        });
         return OrdersResource::collection($data)->additional([
             'meta' => [
                 'userBalance' => $this->getUserBalance(),

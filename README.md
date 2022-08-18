@@ -13,6 +13,8 @@ There is a command to import car list. This can be scheduled as a cronjob.
 
     php artisan import:cars
 
+You can use Insomnia json file from root dir.
+
 # Endpoints
 
 ## Authentication
@@ -52,11 +54,20 @@ There is a command to import car list. This can be scheduled as a cronjob.
         "token": "..."
     }
 
+## Cars
+`GET` /api/v1/cars
+
+    {
+        "token": "...",
+        "page": 1 // Optional
+    }
+
 ## Orders
 `GET` /api/v1/orders
 
     {
         "token": "...",
+        "page": 1, // optional
         "service_id": 1, // optional
         "car_id": 1, // optional
     }
